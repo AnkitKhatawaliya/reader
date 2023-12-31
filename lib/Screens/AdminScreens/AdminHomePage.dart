@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:reader/Screens/AdminScreens/See_all.dart';
 import 'package:reader/Widgets/CustomCard.dart';
 import 'package:reader/homepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as http;
 import '../../Widgets/Logout_BOX.dart';
 import '../../Widgets/Select_Class.dart';
+import '../../Workflow/Base_URLs.dart';
 
 class admin_homepage extends StatefulWidget {
   const admin_homepage({Key? key}) : super(key: key);
@@ -54,8 +58,20 @@ class _AdminHomePageState extends State<admin_homepage> {
                         await Select_Class(context);
 
                     if (selectedValues["_cancel"] == "false") {
-                      String selectedClass = selectedValues["class"] ?? "1";
-                      String selectedSection = selectedValues["section"] ?? "A";
+                      String section = selectedValues["section"] ?? "A";
+                      int? standard = int.tryParse(selectedValues["class"] ?? "1");
+                      final response = await http.get(
+                        Uri.parse("$Admin_Base_url/get_students/$standard/$section"),
+                      );
+                      if (response.statusCode == 200) {
+                        List<dynamic> jsonResponse = json.decode(response.body);
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AllStudents(studentList: jsonResponse),
+                            ),
+                          );
+                      }
                     }
                   },
                 ),
