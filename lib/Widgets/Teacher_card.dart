@@ -33,7 +33,7 @@ class Teacher_Card extends StatelessWidget {
                       ),
                     ),
                 ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.1,),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.1),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -43,8 +43,8 @@ class Teacher_Card extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 28),),
-                          Text("Teacher",style: TextStyle(color: Colors.grey),),
+                          Text(name,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 28),),
+                          const Text("Teacher",style: TextStyle(color: Colors.grey),),
 
                         ],
                       ),
@@ -52,7 +52,7 @@ class Teacher_Card extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Primary Class  "),
@@ -62,10 +62,9 @@ class Teacher_Card extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                        Text(":  "+standard),
-                        Text(":  "+subject)
+                        Text(":  $standard"),
+                        Text(":  $subject")
                       ],)
-
                     ],
                   ),
                 ],

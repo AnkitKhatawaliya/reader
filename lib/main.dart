@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:reader/homepage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/AdminScreens/AdminHomePage.dart';
+import 'Screens/AdminScreens/Admin_login.dart';
+import 'homepage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,20 +47,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> checkAndNav() async {
-    int a = 2;
-    if (a < 5) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const AdminHomePage()));
-    } else {
-      Fluttertoast.showToast(
-        msg: "Failed to fetch student data",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getBool("is_admin_login")??false) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const admin_homepage()));
+    } else {      Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Home_Screen()));
     }
   }
 

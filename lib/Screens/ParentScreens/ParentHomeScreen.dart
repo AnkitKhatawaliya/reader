@@ -72,51 +72,37 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
               CustomCardViewone(
                 title: "See Attendance Records",
                 icon: Icons.app_registration,
-                onTap: () {},
-                iconcolor: Colors.tealAccent.shade700,
-                textcolor: Colors.blueGrey.shade400,
+                onTap: () {}
               ),
               CustomCardViewone(
                 title: "Today's HomeWork",
                 icon: Icons.home_work_outlined,
-                onTap: () {},
-                iconcolor: Colors.tealAccent.shade700,
-                textcolor: Colors.blueGrey.shade400,
+                onTap: () {}
               ),
               CustomCardViewone(
                 title: "Marks Records",
                 icon: Icons.note_add_outlined,
-                onTap: () {},
-                iconcolor: Colors.tealAccent.shade700,
-                textcolor: Colors.blueGrey.shade400,
+                onTap: () {}
               ),
               CustomCardViewone(
                 title: "Notifications",
                 icon: Icons.view_comfy_outlined,
-                onTap: () {},
-                iconcolor: Colors.tealAccent.shade700,
-                textcolor: Colors.blueGrey.shade400,
+                onTap: () {}
               ),
               CustomCardViewone(
                 title: "Calendar",
                 icon: Icons.library_books,
-                onTap: () {},
-                iconcolor: Colors.tealAccent.shade700,
-                textcolor: Colors.blueGrey.shade400,
+                onTap: () {}
               ),
               CustomCardViewone(
                 title: "Talk with Teachers",
                 icon: Icons.library_books,
-                onTap: () {},
-                iconcolor: Colors.tealAccent.shade700,
-                textcolor: Colors.blueGrey.shade400,
+                onTap: () {}
               ),
               CustomCardViewone(
                 title: "Log Out",
                 icon: Icons.logout_outlined,
-                onTap: () {},
-                iconcolor: Colors.tealAccent.shade700,
-                textcolor: Colors.blueGrey.shade400,
+                onTap: () {}
               ),
             ],
           ),

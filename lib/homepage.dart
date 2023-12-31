@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:reader/Screens/AdminScreens/AdminHomePage.dart';
 import 'package:reader/Screens/Other_Screens/Suggestion.dart';
-
+import 'Screens/AdminScreens/Admin_login.dart';
+import 'Screens/ParentScreens/Parent_login.dart';
 import 'Widgets/Login_Type.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class Home_Screen extends StatefulWidget {
+  const Home_Screen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<Home_Screen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<Home_Screen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const AdminHomePage()));
+                              builder: (context) => const admin_login()));
                     },
                     title: const Row(children: [
                       Icon(Icons.admin_panel_settings),
@@ -138,7 +138,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               Login_type(
                                 icon: Icons.account_balance_wallet,
                                 show_text: 'Login as Parent',
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const Parent_login()));
+                                },
                               )
                             ],
                           ),
@@ -194,9 +199,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ClipOval(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.height *
-                        0.15, // Replace 'desiredWidth' with your preferred width
+                        0.15,
                     height: MediaQuery.of(context).size.height *
-                        0.15, // Replace 'desiredHeight' with your preferred height
+                        0.15,
                     child: Image.network(iconLink, fit: BoxFit.cover),
                   ),
                 ),
