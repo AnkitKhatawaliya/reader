@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:reader/Screens/TeacherScreens/teacher_login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/AdminScreens/AdminHomePage.dart';
-import 'Screens/AdminScreens/Admin_login.dart';
 import 'homepage.dart';
 
 void main() {
@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const admin_homepage()));
     } else {      Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const admin_homepage()));
+        context, MaterialPageRoute(builder: (context) => const teacher_login()));
     }
   }
 

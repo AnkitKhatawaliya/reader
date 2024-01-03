@@ -203,7 +203,6 @@ class _Parent_loginState extends State<Parent_login> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.015,
                         ),
-
                       ],
                     )
                   ],

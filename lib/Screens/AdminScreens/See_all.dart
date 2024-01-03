@@ -12,8 +12,7 @@ class _AllStudentsState extends State<AllStudents> {
   int findmax(){
     List<dynamic> yourList = widget.studentList?[1] ?? '';
     int max =yourList.length;
-
-
+    print("function called");
     return max;
   }
   @override

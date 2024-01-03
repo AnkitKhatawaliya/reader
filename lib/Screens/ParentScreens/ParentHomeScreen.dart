@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:reader/Widgets/CustomCard.dart';
+import 'package:reader/Widgets/Logout_BOX.dart';
 import 'package:reader/Widgets/Student_Card.dart';
+import 'package:reader/homepage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ParentHomeScreen extends StatefulWidget {
   const ParentHomeScreen({super.key});
@@ -85,7 +88,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                 onTap: () {}
               ),
               CustomCardViewone(
-                title: "Notifications",
+                title: "Notices",
                 icon: Icons.view_comfy_outlined,
                 onTap: () {}
               ),
@@ -95,14 +98,26 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                 onTap: () {}
               ),
               CustomCardViewone(
-                title: "Talk with Teachers",
-                icon: Icons.library_books,
-                onTap: () {}
-              ),
-              CustomCardViewone(
                 title: "Log Out",
-                icon: Icons.logout_outlined,
-                onTap: () {}
+                icon: Icons.logout,
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Log_out(
+                        onTap: () async {
+                          SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                          prefs.setBool("is_parent_login", false);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Home_Screen()));
+                        },
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),
