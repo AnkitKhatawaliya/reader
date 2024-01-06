@@ -25,6 +25,16 @@ class _AdminHomePageState extends State<admin_homepage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Log_out(
+              onTap: () async {
+                await logout(context);
+              },
+            );
+          },
+        );
         return false;
       },
       child: Scaffold(
@@ -177,13 +187,7 @@ class _AdminHomePageState extends State<admin_homepage> {
                       builder: (BuildContext context) {
                         return Log_out(
                           onTap: () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setBool("is_admin_login", false);
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Home_Screen()));
+                            await logout(context);
                           },
                         );
                       },
@@ -197,4 +201,11 @@ class _AdminHomePageState extends State<admin_homepage> {
       ),
     );
   }
+}
+
+Future<void> logout(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool("is_admin_login", false);
+  Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => const Home_Screen()));
 }

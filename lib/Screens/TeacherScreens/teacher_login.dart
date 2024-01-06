@@ -131,7 +131,6 @@ class _teacher_loginState extends State<teacher_login> {
                                 fontSize: 16.0,
                               );
                               List<dynamic> hp_info = json.decode(info.body)[0];
-                              print(hp_info);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
