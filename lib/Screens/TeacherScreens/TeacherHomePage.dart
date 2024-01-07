@@ -37,7 +37,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
           },
         );
         return false;
-        },
+      },
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -70,16 +70,17 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       Uri.parse(
                           "$Teacher_Base_url/get_class_records/${widget.Teacher_HomePage[3]}/${widget.Teacher_HomePage[4]}"),
                     );
-                    if(student_records.statusCode == 200) {
-                      List<dynamic> students = json.decode(
-                          student_records.body);
+                    if (student_records.statusCode == 200) {
+                      List<dynamic> students =
+                          json.decode(student_records.body);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => Mark_attendance(
                             Students: students,
                             Standard: widget.Teacher_HomePage[3],
-                            Section: widget.Teacher_HomePage[4],),
+                            Section: widget.Teacher_HomePage[4],
+                          ),
                         ),
                       );
                     }
@@ -107,7 +108,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                     if (selectedValues["_cancel"] == "false") {
                       String section = selectedValues["section"] ?? "A";
                       int? standard =
-                      int.tryParse(selectedValues["class"] ?? "1");
+                          int.tryParse(selectedValues["class"] ?? "1");
                       Fluttertoast.showToast(
                         msg: "Loading Students...",
                         toastLength: Toast.LENGTH_SHORT,
@@ -118,12 +119,12 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       );
                       final student_records = await http.get(
                         Uri.parse(
-                            "$Teacher_Base_url/get_class_records/$standard/${section}"),
+                            "$Teacher_Base_url/get_class_records/$standard}/${section}"),
                       );
                       print(student_records.statusCode);
-                      if(student_records.statusCode == 200) {
-                        List<dynamic> students = json.decode(
-                            student_records.body);
+                      if (student_records.statusCode == 200) {
+                        List<dynamic> students =
+                            json.decode(student_records.body);
                         print("Navigating");
                         Navigator.push(
                           context,
@@ -131,19 +132,19 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                             builder: (context) => Give_Marks(
                               Students: students,
                               Standard: widget.Teacher_HomePage[3],
-                              Section: widget.Teacher_HomePage[4], Subject: widget.Teacher_HomePage[5],),
+                              Section: widget.Teacher_HomePage[4],
+                              Subject: widget.Teacher_HomePage[5],
+                            ),
                           ),
                         );
                       }
                     }
-
                   },
                 ),
                 CustomCardViewone(
                   title: "See Attendance Records",
                   icon: Icons.view_comfy_outlined,
-                  onTap: () {
-                  },
+                  onTap: () {},
                 ),
                 CustomCardViewone(
                   title: "View Homework ",
@@ -201,101 +202,95 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
 
   Stack Teacher_card(BuildContext context) {
     return Stack(
-                children: [
-                  const Over_Images(),
-                  Column(
+      children: [
+        const Over_Images(),
+        Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.4,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.1,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.55,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.4,
+                      Text(
+                        "${widget.Teacher_HomePage[0]}",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 28),
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.1,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.55,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      const Text(
+                        "Teacher",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.30,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                const Text("Primary Class"),
                                 Text(
-                                  "${widget.Teacher_HomePage[0]}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 28),
-                                ),
-                                const Text(
-                                  "Teacher",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.01,
-                                ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.30,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text("Primary Class"),
-                                          Text(
-                                              ": ${widget.Teacher_HomePage[3]} ${widget.Teacher_HomePage[4]}"),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text("Subject"),
-                                          Text(
-                                              ": ${widget.Teacher_HomePage[5]}"),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                    ": ${widget.Teacher_HomePage[3]} ${widget.Teacher_HomePage[4]}"),
                               ],
                             ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  Positioned(
-                    top: MediaQuery.of(context).size.height * 0.36,
-                    left: MediaQuery.of(context).size.width * 0.65,
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.32,
-                        child: Image.network(
-                          "$Teacher_Base_url/Teacher_image/${widget.Teacher_HomePage[1]}",
-                          width: double.maxFinite,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          (loadingProgress.expectedTotalBytes ?? 1)
-                                      : null,
-                                ),
-                              );
-                            }
-                          },
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text("Subject"),
+                                Text(": ${widget.Teacher_HomePage[5]}"),
+                              ],
+                            )
+                          ],
                         ),
                       ),
-
+                    ],
                   ),
-                ],
-              );
+                ),
+              ],
+            )
+          ],
+        ),
+        Positioned(
+          top: MediaQuery.of(context).size.height * 0.36,
+          left: MediaQuery.of(context).size.width * 0.65,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.32,
+            child: Image.network(
+              "$Teacher_Base_url/Teacher_image/${widget.Teacher_HomePage[1]}",
+              width: double.maxFinite,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              (loadingProgress.expectedTotalBytes ?? 1)
+                          : null,
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
+
 Future<void> logout(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool("is_teacher_login", false);
