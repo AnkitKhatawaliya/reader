@@ -84,11 +84,10 @@ class _Mark_attendanceState extends State<Mark_attendance> {
                         child: Row(
                           children: [
                             SizedBox(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
+                              width:36,
+                              child: Center(
                                 child: Text(
-                                  widget.Students[0][index + 2],
+                                  "${widget.Students[0][index + 2]}",
                                   style: const TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -191,13 +190,11 @@ class _Mark_attendanceState extends State<Mark_attendance> {
   }
 
   Future<void> uploadToServer() async {
-    print(attendanceStatusList);
     Map<String, String> dict = {};
 
     for (int i = 0; i < attendanceStatusList.length; i++) {
       dict[(i + 1).toString()] = attendanceStatusList[i];
     }
-    print(dict);
 
     try {
       final response = await http.post(
@@ -206,12 +203,8 @@ class _Mark_attendanceState extends State<Mark_attendance> {
         body: jsonEncode(dict),
       );
       if (response.statusCode == 200) {
-        print('Data sent successfully');
-      } else {
-        print('Failed to send data. Status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
+        print("yes");
+      } else {}
+    } catch (e) {}
   }
 }

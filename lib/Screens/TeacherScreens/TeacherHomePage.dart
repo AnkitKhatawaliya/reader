@@ -11,6 +11,8 @@ import 'package:reader/homepage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Give_Marks.dart';
+
 class TeacherHomePage extends StatefulWidget {
   const TeacherHomePage({super.key, required this.Teacher_HomePage});
   final List<dynamic> Teacher_HomePage;
@@ -56,10 +58,6 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                   title: "Mark Attendance ",
                   icon: Icons.app_registration,
                   onTap: () async {
-                    final student_records = await http.get(
-                      Uri.parse(
-                          "$Teacher_Base_url/get_class_records/${widget.Teacher_HomePage[3]}/${widget.Teacher_HomePage[4]}"),
-                    );
                     Fluttertoast.showToast(
                       msg: "Loading Students...",
                       toastLength: Toast.LENGTH_SHORT,
@@ -68,13 +66,23 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       textColor: Colors.white,
                       fontSize: 16.0,
                     );
-                    List<dynamic> students = json.decode(student_records.body);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Mark_attendance(Students: students, Standard: widget.Teacher_HomePage[3], Section: widget.Teacher_HomePage[4],),
-                      ),
+                    final student_records = await http.get(
+                      Uri.parse(
+                          "$Teacher_Base_url/get_class_records/${widget.Teacher_HomePage[3]}/${widget.Teacher_HomePage[4]}"),
                     );
+                    if(student_records.statusCode == 200) {
+                      List<dynamic> students = json.decode(
+                          student_records.body);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Mark_attendance(
+                            Students: students,
+                            Standard: widget.Teacher_HomePage[3],
+                            Section: widget.Teacher_HomePage[4],),
+                        ),
+                      );
+                    }
                   },
                 ),
                 CustomCardViewone(
@@ -95,10 +103,40 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                   onTap: () async {
                     Map<String, String> selectedValues =
                         await Select_Class(context);
-                    String selectedClass = selectedValues["class"] ?? "1";
-                    String selectedSection = selectedValues["section"] ?? "A";
-                    print(
-                        "Selected Class: $selectedClass, Selected Section: $selectedSection");
+
+                    if (selectedValues["_cancel"] == "false") {
+                      String section = selectedValues["section"] ?? "A";
+                      int? standard =
+                      int.tryParse(selectedValues["class"] ?? "1");
+                      Fluttertoast.showToast(
+                        msg: "Loading Students...",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                      final student_records = await http.get(
+                        Uri.parse(
+                            "$Teacher_Base_url/get_class_records/$standard/${section}"),
+                      );
+                      print(student_records.statusCode);
+                      if(student_records.statusCode == 200) {
+                        List<dynamic> students = json.decode(
+                            student_records.body);
+                        print("Navigating");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Give_Marks(
+                              Students: students,
+                              Standard: widget.Teacher_HomePage[3],
+                              Section: widget.Teacher_HomePage[4], Subject: widget.Teacher_HomePage[5],),
+                          ),
+                        );
+                      }
+                    }
+
                   },
                 ),
                 CustomCardViewone(
