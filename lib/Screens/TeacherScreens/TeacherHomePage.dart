@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:reader/Screens/TeacherScreens/Give_Homework.dart';
 import 'package:reader/Screens/TeacherScreens/Mark_Attendance.dart';
 import 'package:reader/Widgets/CustomCard.dart';
 import 'package:reader/Widgets/Logout_BOX.dart';
@@ -92,10 +93,22 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                   onTap: () async {
                     Map<String, String> selectedValues =
                         await Select_Class(context);
-                    String selectedClass = selectedValues["class"] ?? "1";
-                    String selectedSection = selectedValues["section"] ?? "A";
-                    print(
-                        "Selected Class: $selectedClass, Selected Section: $selectedSection");
+
+                    if (selectedValues["_cancel"] == "false") {
+                      String section = selectedValues["section"] ?? "A";
+                      int? standard =
+                      int.tryParse(selectedValues["class"] ?? "1");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Give_HW(
+                            Standard: standard?? widget.Teacher_HomePage[3],
+                            Section: section,
+                            Subject: widget.Teacher_HomePage[5],
+                          ),
+                        ),
+                      );
+                    }
                   },
                 ),
                 CustomCardViewone(
@@ -125,7 +138,6 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       if (student_records.statusCode == 200) {
                         List<dynamic> students =
                             json.decode(student_records.body);
-                        print("Navigating");
                         Navigator.push(
                           context,
                           MaterialPageRoute(

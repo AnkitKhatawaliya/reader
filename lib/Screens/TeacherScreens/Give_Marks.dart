@@ -39,7 +39,7 @@ class _Give_MarksState extends State<Give_Marks> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.tealAccent.shade700,
-        title: const Text("Mark Attendance "),
+        title: const Text("Give Marks "),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -65,7 +65,6 @@ class _Give_MarksState extends State<Give_Marks> {
                     ),
                   ),
                   Text(
-                    // " ${DateFormat('dd-MM-yyyy').format(DateTime.now())}",
                     widget.Subject,
                     style: TextStyle(
                       color: Colors.cyan.shade400,
