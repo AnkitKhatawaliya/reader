@@ -1,0 +1,1 @@
+      "Day": DateFormat('EEEE').format(DateTime.now()),
