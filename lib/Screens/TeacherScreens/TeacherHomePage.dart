@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reader/Screens/TeacherScreens/Give_Homework.dart';
 import 'package:reader/Screens/TeacherScreens/Mark_Attendance.dart';
+import 'package:reader/Screens/TeacherScreens/teach_see_att.dart';
+import 'package:reader/Screens/TeacherScreens/teach_see_notices.dart';
 import 'package:reader/Widgets/CustomCard.dart';
 import 'package:reader/Widgets/Logout_BOX.dart';
 import 'package:reader/Widgets/Over_Images.dart';
@@ -15,8 +17,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Give_Marks.dart';
 
 class TeacherHomePage extends StatefulWidget {
-  const TeacherHomePage({super.key, required this.Teacher_HomePage});
+  const TeacherHomePage({super.key, required this.Teacher_HomePage, required this.ID});
   final List<dynamic> Teacher_HomePage;
+  final String ID;
 
   @override
   State<TeacherHomePage> createState() => _TeacherHomePageState();
@@ -134,7 +137,6 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                         Uri.parse(
                             "$Teacher_Base_url/get_class_records/$standard}/${section}"),
                       );
-                      print(student_records.statusCode);
                       if (student_records.statusCode == 200) {
                         List<dynamic> students =
                             json.decode(student_records.body);
@@ -156,7 +158,24 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                 CustomCardViewone(
                   title: "See Attendance Records",
                   icon: Icons.view_comfy_outlined,
-                  onTap: () {},
+                  onTap: () async {
+                    final att_rec = await http.get(
+                      Uri.parse(
+                          "$Teacher_Base_url/get_attendance/${widget.Teacher_HomePage[3]}/${widget.Teacher_HomePage[4]}"),
+                    );
+                    print(att_rec.statusCode);
+                    if (att_rec.statusCode == 200) {
+                      List<dynamic> Attendance =
+                      json.decode(att_rec.body);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Teac_see_att(Att_rec: Attendance,),
+                        ),
+                      );
+                    }
+
+                  },
                 ),
                 CustomCardViewone(
                   title: "View Homework ",
@@ -187,7 +206,21 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                     icon: Icons.library_books,
                     onTap: () {}),
                 CustomCardViewone(
-                    title: "Notices", icon: Icons.library_books, onTap: () {}),
+                    title: "Notices", icon: Icons.library_books, onTap: () async {
+                  final response = await http.get(
+                    Uri.parse("$Teacher_Base_url/notices"),
+                  );
+                  if (response.statusCode == 200) {
+                    List<dynamic> jsonResponse = json.decode(response.body);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            See_Notices_teacher(noticelist: jsonResponse, Standard: widget.Teacher_HomePage[3], ID: widget.ID,),
+                      ),
+                    );
+                  }
+                }),
                 CustomCardViewone(
                   title: "Log Out",
                   icon: Icons.logout,

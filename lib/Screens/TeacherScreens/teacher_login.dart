@@ -134,7 +134,7 @@ class _teacher_loginState extends State<teacher_login> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => TeacherHomePage(Teacher_HomePage: hp_info),
+                                  builder: (context) => TeacherHomePage(Teacher_HomePage: hp_info, ID: _id.text.trim(),),
                                 ),
                               );
                             }
