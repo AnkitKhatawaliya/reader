@@ -65,7 +65,7 @@ class _See_noticesState extends State<See_notices> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Add_notice()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const Add_notice()));
                   },
                   child: const Text(
                     "Add a Notice",
@@ -108,7 +108,7 @@ class _See_noticesState extends State<See_notices> {
                       shrinkWrap: true,
                       itemCount: widget.noticelist.length,
                       itemBuilder: (context, index) {
-                        var time_table =
+                        var Notice =
                         widget.noticelist[index] as List<dynamic>;
                         return SizedBox(
                           height: MediaQuery.of(context).size.height * 0.08,
@@ -121,11 +121,11 @@ class _See_noticesState extends State<See_notices> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Text("  ${index+1}        "),
-                                Text("${time_table[5]}"),
-                                Text("${time_table[1]}  "),
-                                Text("${time_table[2]}  "),
-                                Text("${time_table[4]}      "),
-                                Text("${time_table[6]}      "),
+                                Text("${Notice[5]}"),
+                                Text("${Notice[1]}  "),
+                                Text("${Notice[2]}  "),
+                                Text("${Notice[4]}      "),
+                                Text("${Notice[6]}      "),
                               ],
                             ),
                           ),

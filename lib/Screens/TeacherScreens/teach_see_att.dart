@@ -12,27 +12,20 @@ class _Teac_see_attState extends State<Teac_see_att> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> Names = widget.Att_rec[0];
-    List<List<dynamic>> restOfData = [];
-
-    for (int i = 1; i < widget.Att_rec.length; i++) {
-      List<dynamic> rowData = widget.Att_rec[i];
-      restOfData.add(rowData.sublist(1));
-    }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.tealAccent.shade700,
-        title: const Text(" Attendance reocrds"),
+        title: const Text(" Attendance records"),
       ),
       body: ListView.builder(
         itemCount: widget.Att_rec.length-1,
+        reverse: true,
         itemBuilder: (context, index) {
           List<dynamic> record = widget.Att_rec[index+1];
-
           String date = record[0];
-
           return Card(
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,15 +33,15 @@ class _Teac_see_attState extends State<Teac_see_att> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Date: $date',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 SizedBox(
-                  height: 300,
+                  height: 450,
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: Names.length-2,
