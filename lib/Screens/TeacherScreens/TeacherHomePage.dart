@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reader/Screens/TeacherScreens/Give_Homework.dart';
 import 'package:reader/Screens/TeacherScreens/Mark_Attendance.dart';
+import 'package:reader/Screens/TeacherScreens/See_marks.dart';
+import 'package:reader/Screens/TeacherScreens/see_Homework.dart';
 import 'package:reader/Screens/TeacherScreens/teach_see_att.dart';
 import 'package:reader/Screens/TeacherScreens/teach_see_notices.dart';
 import 'package:reader/Widgets/CustomCard.dart';
@@ -135,7 +137,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       );
                       final student_records = await http.get(
                         Uri.parse(
-                            "$Teacher_Base_url/get_class_records/$standard}/${section}"),
+                            "$Teacher_Base_url/get_class_records/$standard/${section}"),
                       );
                       if (student_records.statusCode == 200) {
                         List<dynamic> students =
@@ -185,8 +187,21 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                         await Select_Class(context);
                     String selectedClass = selectedValues["class"] ?? "1";
                     String selectedSection = selectedValues["section"] ?? "A";
-                    print(
-                        "Selected Class: $selectedClass, Selected Section: $selectedSection");
+                    final Home_WORK = await http.get(
+                      Uri.parse(
+                          "$Teacher_Base_url/fetch_homework/${selectedClass}/${selectedSection}/${widget.Teacher_HomePage[5]}"),
+                    );
+                    if (Home_WORK.statusCode == 200) {
+                      List<dynamic> home_work =
+                      json.decode(Home_WORK.body);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Teach_Homework(Homework: home_work),
+                        ),
+                      );
+                    }
+
                   },
                 ),
                 CustomCardViewone(
@@ -199,7 +214,24 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                     String selectedSection = selectedValues["section"] ?? "A";
                     print(
                         "Selected Class: $selectedClass, Selected Section: $selectedSection");
+                    final Marks_rec = await http.get(
+                      Uri.parse(
+                          "$Teacher_Base_url/get_marks/${selectedClass}/${selectedSection}/${widget.Teacher_HomePage[5]}"),
+                    );
+                    if (Marks_rec.statusCode == 200) {
+                      List<dynamic> marks_body =
+                      json.decode(Marks_rec.body);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => tech_See_Marks(Marks_List: marks_body),
+                        ),
+                      );
+                    }
+
                   },
+
+
                 ),
                 CustomCardViewone(
                     title: "See Schedule",

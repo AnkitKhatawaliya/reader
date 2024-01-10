@@ -1,1 +1,2 @@
-ok
+          Text(
+              "for ${widget.Homework[0][1]} ${widget.Homework[0][2]} Subject = ${widget.Homework[0][3]}")
