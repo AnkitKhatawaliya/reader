@@ -51,9 +51,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (prefs.getBool("is_admin_login")??false) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const admin_homepage()));
+          context, MaterialPageRoute(builder: (context) => const Home_Screen()));
     } else {      Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const teacher_login()));
+        context, MaterialPageRoute(builder: (context) => const Home_Screen()));
     }
   }
 

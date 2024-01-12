@@ -14,14 +14,13 @@ class Login_type extends StatelessWidget {
       child: Container(
         constraints: BoxConstraints(
           minWidth:
-              MediaQuery.of(context).size.width * 0.5, // set your minimum width
+              MediaQuery.of(context).size.width * 0.5,
           minHeight:
               MediaQuery.of(context).size.height * 0.11, // set your minimum height
         ),
         child: Card(
           elevation: 0,
           color: Colors.grey.shade300,
-          child:  Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,7 +32,6 @@ class Login_type extends StatelessWidget {
                 Text(show_text)
               ],
             ),
-          ),
         ),
       ),
     );
