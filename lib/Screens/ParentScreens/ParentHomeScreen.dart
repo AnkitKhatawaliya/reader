@@ -35,7 +35,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
   String Gender = "____";
   String Adm_no = "____";
   String Parent_No = "____";
-  String Today_status = "Today's Attendance has not been marked .";
+  String Today_status = "Today's  Attendance Status: Not Marked Yet.";
 
   @override
   Widget build(BuildContext context) {
@@ -63,15 +63,22 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
         Count = Count+1;
         attendanceRecord.add(widget.Parent_HomePage[i]);
         Today_status = "Today's Attendance Status: Not Marked Yet.  Total = $present/$Count";
-        if (widget.Parent_HomePage[i][0] == "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}") {
-          if (widget.Parent_HomePage[i][2] == "Absent") {
-            Today_status = "Today's Attendance Status: Absent.  Total = $present/$Count";
-          } else if (widget.Parent_HomePage[i][2] == "Present") {
-            present = present + 1;
-            Today_status = "Today's Attendance Status: Present.  Total = $present/$Count";
-          } else if (widget.Parent_HomePage[i][2] == "Leave") {
-            Today_status = "Today's Attendance Status: On Leave.  Total = $present/$Count";
-          }
+        if(widget.Parent_HomePage[i][2] == "Present") {
+          present = present + 1;
+          Today_status =
+          "Today's Attendance Status: Not Marked Yet.  Total = $present/$Count";
+        }
+          if (widget.Parent_HomePage[i][0] == "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}") {
+            if (widget.Parent_HomePage[i][2] == "Leave"){
+              Today_status = "Today's Attendance Status: On Leave.  Total = $present/$Count";
+            }
+            if (widget.Parent_HomePage[i][2] == "Present"){
+              Today_status = "Today's Attendance Status: Present.  Total = $present/$Count";
+            }
+            if (widget.Parent_HomePage[i][2] == "Absent"){
+              Today_status = "Today's Attendance Status: Leave.  Total = $present/$Count";
+            }
+
         }
       } else if (widget.Parent_HomePage[i][1] == "Password"|| widget.Parent_HomePage[i][1] == "Parent_PSD") {
       }
@@ -121,7 +128,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                     onTap: () {
                       Future.delayed(const Duration(milliseconds: 50), () {
                       });
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>parentSeeAtt(Attendance: attendanceRecord,)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>parentSeeAtt(Attendance: attendanceRecord, Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
                     }),
                 CustomCardViewone(
                       title: "Today's HomeWork",
@@ -134,7 +141,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                       print(response.statusCode);
                       if(response.statusCode == 200){
                         List<dynamic> jsonResponse = json.decode(response.body);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_HomeWork(Homework_List: jsonResponse,)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_HomeWork(Homework_List: jsonResponse, Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
                       }
                     }),
                 CustomCardViewone(
@@ -143,7 +150,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                     onTap: () {
                       Future.delayed(const Duration(milliseconds: 50), () {
                       });
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_Marks(Marks_records: marksRecord,)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_Marks(Marks_records: marksRecord, Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
 
                     }),
                 CustomCardViewone(
@@ -157,7 +164,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                       print(response.statusCode);
                       if(response.statusCode == 200){
                         List<dynamic> jsonResponse = json.decode(response.body);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_Notices(Notice_List: jsonResponse,)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_Notices(Notice_List: jsonResponse, Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
                       }
                     }),
                 CustomCardViewone(
@@ -171,7 +178,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                       print(response.statusCode);
                       if(response.statusCode == 200){
                         List<dynamic> jsonResponse = json.decode(response.body);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_TimeTable(TimeTable_List: jsonResponse,)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_TimeTable(TimeTable_List: jsonResponse,Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
                       }
                     }),
                 CustomCardViewone(

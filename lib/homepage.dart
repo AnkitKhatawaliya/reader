@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reader/Screens/Other_Screens/Suggestion.dart';
+import 'package:reader/Screens/TeacherScreens/teacher_login.dart';
 import 'package:reader/Widgets/Over_Images.dart';
 import 'Screens/AdminScreens/Admin_login.dart';
 import 'Screens/ParentScreens/Parent_login.dart';
@@ -128,7 +129,12 @@ class _HomeScreenState extends State<Home_Screen> {
                       Login_type(
                         icon: Icons.school,
                         show_text: 'Login as Teacher',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const teacher_login()));
+                        },
                       ),
                       Login_type(
                         icon: Icons.info,

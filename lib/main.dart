@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:reader/Screens/TeacherScreens/teacher_login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Screens/AdminScreens/AdminHomePage.dart';
 import 'homepage.dart';
 
 void main() {
