@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:reader/Screens/AdminScreens/See_TimeTable.dart';
-import 'package:reader/Screens/AdminScreens/See_all.dart';
+import 'package:reader/Screens/AdminScreens/see_all.dart';
 import 'package:reader/Screens/AdminScreens/See_teachers.dart';
 import 'package:reader/Widgets/CustomCard.dart';
 import 'package:reader/homepage.dart';
@@ -94,7 +94,6 @@ class _AdminHomePageState extends State<admin_homepage> {
                         Uri.parse(
                             "$Admin_Base_url/get_students/$standard/$section"),
                       );
-                      print("what");
                       if (response.statusCode == 200) {
                         List<dynamic> jsonResponse = json.decode(response.body);
                         Navigator.push(

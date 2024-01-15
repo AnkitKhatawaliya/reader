@@ -43,8 +43,12 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
     late List<dynamic> marksRecord = [];
     int present = 0;
     int Count = 0;
+    bool tod = false;
+    bool absent = false;
+    bool leave = false;
     for (int i = 0; i < widget.Parent_HomePage.length; i++) {
-      widget.Parent_HomePage[i][0] = Formatted_Date(widget.Parent_HomePage[i][0]);
+      widget.Parent_HomePage[i][0] =
+          Formatted_Date(widget.Parent_HomePage[i][0]);
       if (widget.Parent_HomePage[i][1] == "Name") {
         Name = widget.Parent_HomePage[i][2];
       } else if (widget.Parent_HomePage[i][1] == "Roll_No") {
@@ -60,31 +64,43 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
       } else if (widget.Parent_HomePage[i][1] == "Parent_NO") {
         Parent_No = widget.Parent_HomePage[i][2];
       } else if (widget.Parent_HomePage[i][1] == "Attendance") {
-        Count = Count+1;
+        Count = Count + 1;
         attendanceRecord.add(widget.Parent_HomePage[i]);
-        Today_status = "Today's Attendance Status: Not Marked Yet.  Total = $present/$Count";
-        if(widget.Parent_HomePage[i][2] == "Present") {
+        Today_status =
+            "Today's Attendance Status: Not Marked Yet.  Total = $present/$Count";
+        if (widget.Parent_HomePage[i][2] == "Present") {
           present = present + 1;
           Today_status =
-          "Today's Attendance Status: Not Marked Yet.  Total = $present/$Count";
+              "Today's Attendance Status: Not Marked Yet.  Total = $present/$Count";
         }
-          if (widget.Parent_HomePage[i][0] == "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}") {
-            if (widget.Parent_HomePage[i][2] == "Leave"){
-              Today_status = "Today's Attendance Status: On Leave.  Total = $present/$Count";
-            }
-            if (widget.Parent_HomePage[i][2] == "Present"){
-              Today_status = "Today's Attendance Status: Present.  Total = $present/$Count";
-            }
-            if (widget.Parent_HomePage[i][2] == "Absent"){
-              Today_status = "Today's Attendance Status: Leave.  Total = $present/$Count";
-            }
-
+        String today =
+            "${DateTime.now().day.toString().padLeft(2, '0')}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().year}";
+        if (widget.Parent_HomePage[i][0] == today) {
+          if (widget.Parent_HomePage[i][2] == "Leave") {
+            leave = true;
+          }
+          if (widget.Parent_HomePage[i][2] == "Present") {
+            tod = true;
+          }
+          if (widget.Parent_HomePage[i][2] == "Absent") {
+            absent = true;
+          }
         }
-      } else if (widget.Parent_HomePage[i][1] == "Password"|| widget.Parent_HomePage[i][1] == "Parent_PSD") {
-      }
-      else{
+      } else if (widget.Parent_HomePage[i][1] == "Password" ||
+          widget.Parent_HomePage[i][1] == "Parent_PSD") {
+      } else {
         marksRecord.add(widget.Parent_HomePage[i]);
       }
+    }
+    if (tod) {
+      Today_status =
+          "Today's Attendance Status: Present.  Total = $present/$Count";
+    } else if (leave) {
+      Today_status =
+          "Today's Attendance Status: Leave.  Total = $present/$Count";
+    } else if (absent) {
+      Today_status =
+          "Today's Attendance Status: Absent.  Total = $present/$Count";
     }
     return WillPopScope(
       onWillPop: () async {
@@ -117,7 +133,8 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                 ),
                 Text(
                   Today_status,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Divider(
                   color: Colors.tealAccent.shade400,
@@ -126,12 +143,19 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                     title: "See Attendance Records",
                     icon: Icons.app_registration,
                     onTap: () {
-                      Future.delayed(const Duration(milliseconds: 50), () {
-                      });
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>parentSeeAtt(Attendance: attendanceRecord, Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
+                      Future.delayed(const Duration(milliseconds: 50), () {});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => parentSeeAtt(
+                                  Attendance: attendanceRecord,
+                                  Name: Name,
+                                  Adm_no: Adm_no,
+                                  standard: widget.standard,
+                                  section: widget.section)));
                     }),
                 CustomCardViewone(
-                      title: "Today's HomeWork",
+                    title: "Today's HomeWork",
                     icon: Icons.home_work_outlined,
                     onTap: () async {
                       final response = await http.get(
@@ -139,19 +163,33 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                             "$Client_Base_url/Home_Work/${widget.standard}/${widget.section}"),
                       );
                       print(response.statusCode);
-                      if(response.statusCode == 200){
+                      if (response.statusCode == 200) {
                         List<dynamic> jsonResponse = json.decode(response.body);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_HomeWork(Homework_List: jsonResponse, Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Parent_HomeWork(
+                                    Homework_List: jsonResponse,
+                                    Name: Name,
+                                    Adm_no: Adm_no,
+                                    standard: widget.standard,
+                                    section: widget.section)));
                       }
                     }),
                 CustomCardViewone(
                     title: "Marks Records",
                     icon: Icons.note_add_outlined,
                     onTap: () {
-                      Future.delayed(const Duration(milliseconds: 50), () {
-                      });
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_Marks(Marks_records: marksRecord, Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
-
+                      Future.delayed(const Duration(milliseconds: 50), () {});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Parent_Marks(
+                                  Marks_records: marksRecord,
+                                  Name: Name,
+                                  Adm_no: Adm_no,
+                                  standard: widget.standard,
+                                  section: widget.section)));
                     }),
                 CustomCardViewone(
                     title: "Notices",
@@ -162,9 +200,17 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                             "$Client_Base_url/Notices/${widget.standard}/${widget.section}"),
                       );
                       print(response.statusCode);
-                      if(response.statusCode == 200){
+                      if (response.statusCode == 200) {
                         List<dynamic> jsonResponse = json.decode(response.body);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_Notices(Notice_List: jsonResponse, Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Parent_Notices(
+                                    Notice_List: jsonResponse,
+                                    Name: Name,
+                                    Adm_no: Adm_no,
+                                    standard: widget.standard,
+                                    section: widget.section)));
                       }
                     }),
                 CustomCardViewone(
@@ -176,9 +222,17 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
                             "$Client_Base_url/Time_table/${widget.standard}/${widget.section}"),
                       );
                       print(response.statusCode);
-                      if(response.statusCode == 200){
+                      if (response.statusCode == 200) {
                         List<dynamic> jsonResponse = json.decode(response.body);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Parent_TimeTable(TimeTable_List: jsonResponse,Name: Name, Adm_no: Adm_no, standard: widget.standard, section: widget.section)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Parent_TimeTable(
+                                    TimeTable_List: jsonResponse,
+                                    Name: Name,
+                                    Adm_no: Adm_no,
+                                    standard: widget.standard,
+                                    section: widget.section)));
                       }
                     }),
                 CustomCardViewone(

@@ -76,9 +76,7 @@ class _Add_noticeState extends State<Add_notice> {
                         if (title.isEmpty ||
                             heading.isEmpty ||
                             description.isEmpty ||
-                            selectedDate == null) {
-                          print("Please fill in all required fields.");
-                        } else {
+                            selectedDate == null) {} else {
                           String formattedDate =
                               "${selectedDate!.year}-${selectedDate!.month.toString().padLeft(2, '0')}-${selectedDate!.day.toString().padLeft(2, '0')}";
 
@@ -95,7 +93,6 @@ class _Add_noticeState extends State<Add_notice> {
                           );
 
                           if (response.statusCode == 200) {
-                            print("Notice added successfully!");
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -137,10 +134,7 @@ class _Add_noticeState extends State<Add_notice> {
                                             child: const Text("See Notices"))
                                       ]);
                                 });
-                          } else {
-                            print(
-                                "Failed to add notice. Status code: ${response.statusCode}");
-                          }
+                          } else {}
                         }
                       },
                       child: const Text("PUBLISH"),
