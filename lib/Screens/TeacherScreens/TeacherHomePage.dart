@@ -5,6 +5,7 @@ import 'package:reader/Screens/TeacherScreens/Give_Homework.dart';
 import 'package:reader/Screens/TeacherScreens/Mark_Attendance.dart';
 import 'package:reader/Screens/TeacherScreens/See_marks.dart';
 import 'package:reader/Screens/TeacherScreens/see_Homework.dart';
+import 'package:reader/Screens/TeacherScreens/teach_schedule.dart';
 import 'package:reader/Screens/TeacherScreens/teach_see_att.dart';
 import 'package:reader/Screens/TeacherScreens/teach_see_notices.dart';
 import 'package:reader/Widgets/CustomCard.dart';
@@ -15,11 +16,11 @@ import 'package:reader/Workflow/Base_URLs.dart';
 import 'package:reader/homepage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Give_Marks.dart';
 
 class TeacherHomePage extends StatefulWidget {
-  const TeacherHomePage({super.key, required this.Teacher_HomePage, required this.ID});
+  const TeacherHomePage(
+      {super.key, required this.Teacher_HomePage, required this.ID});
   final List<dynamic> Teacher_HomePage;
   final String ID;
 
@@ -72,13 +73,12 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       textColor: Colors.white,
                       fontSize: 16.0,
                     );
-                    final student_records = await http.get(
+                    final studentRecords = await http.get(
                       Uri.parse(
                           "$Teacher_Base_url/get_class_records/${widget.Teacher_HomePage[3]}/${widget.Teacher_HomePage[4]}"),
                     );
-                    if (student_records.statusCode == 200) {
-                      List<dynamic> students =
-                          json.decode(student_records.body);
+                    if (studentRecords.statusCode == 200) {
+                      List<dynamic> students = json.decode(studentRecords.body);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -102,12 +102,12 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                     if (selectedValues["_cancel"] == "false") {
                       String section = selectedValues["section"] ?? "A";
                       int? standard =
-                      int.tryParse(selectedValues["class"] ?? "1");
+                          int.tryParse(selectedValues["class"] ?? "1");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => Give_HW(
-                            Standard: standard?? widget.Teacher_HomePage[3],
+                            Standard: standard ?? widget.Teacher_HomePage[3],
                             Section: section,
                             Subject: widget.Teacher_HomePage[5],
                           ),
@@ -135,13 +135,13 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                         textColor: Colors.white,
                         fontSize: 16.0,
                       );
-                      final student_records = await http.get(
+                      final studentRecords = await http.get(
                         Uri.parse(
                             "$Teacher_Base_url/get_class_records/$standard/${section}"),
                       );
-                      if (student_records.statusCode == 200) {
+                      if (studentRecords.statusCode == 200) {
                         List<dynamic> students =
-                            json.decode(student_records.body);
+                            json.decode(studentRecords.body);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -161,22 +161,22 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                   title: "See Attendance Records",
                   icon: Icons.view_comfy_outlined,
                   onTap: () async {
-                    final att_rec = await http.get(
+                    final attRec = await http.get(
                       Uri.parse(
                           "$Teacher_Base_url/get_attendance/${widget.Teacher_HomePage[3]}/${widget.Teacher_HomePage[4]}"),
                     );
-                    print(att_rec.statusCode);
-                    if (att_rec.statusCode == 200) {
-                      List<dynamic> Attendance =
-                      json.decode(att_rec.body);
+                    print(attRec.statusCode);
+                    if (attRec.statusCode == 200) {
+                      List<dynamic> Attendance = json.decode(attRec.body);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Teac_see_att(Att_rec: Attendance,),
+                          builder: (context) => Teac_see_att(
+                            Att_rec: Attendance,
+                          ),
                         ),
                       );
                     }
-
                   },
                 ),
                 CustomCardViewone(
@@ -187,21 +187,21 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                         await Select_Class(context);
                     String selectedClass = selectedValues["class"] ?? "1";
                     String selectedSection = selectedValues["section"] ?? "A";
-                    final Home_WORK = await http.get(
+                    final homeWorkResponse = await http.get(
                       Uri.parse(
                           "$Teacher_Base_url/fetch_homework/${selectedClass}/${selectedSection}/${widget.Teacher_HomePage[5]}"),
                     );
-                    if (Home_WORK.statusCode == 200) {
-                      List<dynamic> home_work =
-                      json.decode(Home_WORK.body);
+                    if (homeWorkResponse.statusCode == 200) {
+                      List<dynamic> homeWork =
+                          json.decode(homeWorkResponse.body);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Teach_Homework(Homework: home_work),
+                          builder: (context) =>
+                              Teach_Homework(Homework: homeWork),
                         ),
                       );
                     }
-
                   },
                 ),
                 CustomCardViewone(
@@ -214,45 +214,57 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                     String selectedSection = selectedValues["section"] ?? "A";
                     print(
                         "Selected Class: $selectedClass, Selected Section: $selectedSection");
-                    final Marks_rec = await http.get(
+                    final marksRec = await http.get(
                       Uri.parse(
                           "$Teacher_Base_url/get_marks/${selectedClass}/${selectedSection}/${widget.Teacher_HomePage[5]}"),
                     );
-                    if (Marks_rec.statusCode == 200) {
-                      List<dynamic> marks_body =
-                      json.decode(Marks_rec.body);
+                    if (marksRec.statusCode == 200) {
+                      List<dynamic> marksBody = json.decode(marksRec.body);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => tech_See_Marks(Marks_List: marks_body),
+                          builder: (context) =>
+                              tech_See_Marks(Marks_List: marksBody),
                         ),
                       );
                     }
-
                   },
-
-
                 ),
                 CustomCardViewone(
                     title: "See Schedule",
                     icon: Icons.library_books,
-                    onTap: () {}),
+                    onTap: () async {
+                      String schedId =
+                          "${widget.Teacher_HomePage[0]} => ${widget.Teacher_HomePage[5]}s";
+                      final response = await http.get(
+                        Uri.parse("$Teacher_Base_url/Fetch_Schedule/${schedId}"),
+                      );
+                      if (response.statusCode == 200) {
+                        List<dynamic> responsebody = json.decode(response.body);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherSchedule(schId: schedId, teacherSchedule: responsebody,)));
+                      }
+                    }),
                 CustomCardViewone(
-                    title: "Notices", icon: Icons.library_books, onTap: () async {
-                  final response = await http.get(
-                    Uri.parse("$Teacher_Base_url/notices"),
-                  );
-                  if (response.statusCode == 200) {
-                    List<dynamic> jsonResponse = json.decode(response.body);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            See_Notices_teacher(noticelist: jsonResponse, Standard: widget.Teacher_HomePage[3], ID: widget.ID,),
-                      ),
-                    );
-                  }
-                }),
+                    title: "Notices",
+                    icon: Icons.library_books,
+                    onTap: () async {
+                      final response = await http.get(
+                        Uri.parse("$Teacher_Base_url/notices"),
+                      );
+                      if (response.statusCode == 200) {
+                        List<dynamic> jsonResponse = json.decode(response.body);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => See_Notices_teacher(
+                              noticelist: jsonResponse,
+                              Standard: widget.Teacher_HomePage[3],
+                              ID: widget.ID,
+                            ),
+                          ),
+                        );
+                      }
+                    }),
                 CustomCardViewone(
                   title: "Log Out",
                   icon: Icons.logout,

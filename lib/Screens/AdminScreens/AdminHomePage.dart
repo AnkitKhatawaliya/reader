@@ -94,13 +94,14 @@ class _AdminHomePageState extends State<admin_homepage> {
                         Uri.parse(
                             "$Admin_Base_url/get_students/$standard/$section"),
                       );
+                      print("what");
                       if (response.statusCode == 200) {
                         List<dynamic> jsonResponse = json.decode(response.body);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                AllStudents(studentList: jsonResponse),
+                                AllStudents(studentList: jsonResponse, standard: selectedValues["class"], section: section,),
                           ),
                         );
                       }

@@ -95,7 +95,6 @@ class _Parent_TimeTableState extends State<Parent_TimeTable> {
                                       Text(" ${widget.TimeTable_List[index][8]}"),
                                       Text(" ${widget.TimeTable_List[index][9]}"),
                                       Text(" ${widget.TimeTable_List[index][10]}"),
-
                                     ],
                                   ),
                                 ),
